@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Task Management</title>
+</head>
+<body>
+<h1>Task List</h1>
+
+<form th:action="@{/add}" method="post" th:object="${newTask}">
+    <input type="text" th:field="*{name}" placeholder="Enter task" required/>
+    <button type="submit">Add Task</button>
+</form>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Completed</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.id}"></td>
+        <td th:text="${task.name}"></td>
+        <td th:text="${task.completed ? 'Yes' : 'No'}"></td>
+        <td>
+            <a th:href="@{'/complete/' + ${task.id}}">Mark Complete</a> |
+            <a th:href="@{'/delete/' + ${task.id}}">Delete</a>
+        </td>
+    </tr>
+</table>
+
+<br>
+<a th:href="@{/deleteAll}">Delete All Tasks</a>
+
+</body>
+</html>
